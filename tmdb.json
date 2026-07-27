@@ -9,12 +9,12 @@
       "tvPattern": "https://player.videasy.to/tv/{tmdbId}/{season}/{episode}?nextEpisode=true&autoplayNextEpisode=true&episodeSelector=true"
     },
     {
-      "name": "vidsrc_wtf_1",
+      "name": "viduki",
       "label": "Main 2",
       "imdbSupported": true,
       "tmdbSupported": true,
-      "moviePattern": "https://www.vidsrc.wtf/api/1/movie/?color=FF0000&id={tmdbId}",
-      "tvPattern": "https://www.vidsrc.wtf/api/1/tv/?color=FF0000&id={tmdbId}&s={season}&e={episode}"
+      "moviePattern": "https://viduki.net/1/movie/{tmdb_id or imdb_id}?color={hex}",
+      "tvPattern": "https://viduki.net/1/tv/{tmdb_id or imdb_id}/{season}/{episode}?color={hex}"
     },
     {
       "name": "vidup",
