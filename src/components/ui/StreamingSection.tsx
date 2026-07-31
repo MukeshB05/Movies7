@@ -56,12 +56,39 @@ export function StreamingSection({
     mediaType === 'movie' ? !!server.moviePattern : !!server.tvPattern
   );
 
-  // Default to first server (which is Videasy in tmdb.json)
-  const defaultServer = servers[0];
+  // Default to "Main 1" server, or fallback to the first available
+  const defaultServer = servers.find(s => s.label === 'Main 1') || servers[0];
 
   const [activeServer, setActiveServer] = useState<Server>(defaultServer);
   const [selectedSeason, setSelectedSeason] = useState<number>(1);
   const [selectedEpisode, setSelectedEpisode] = useState<number>(1);
+
+  // Initialize from localStorage on mount
+  useEffect(() => {
+    try {
+      const savedServerName = localStorage.getItem(`${site_name}-preferred-server`);
+      if (savedServerName) {
+        const savedServer = servers.find(s => s.name === savedServerName);
+        if (savedServer) {
+          setActiveServer(savedServer);
+        }
+      }
+    } catch (e) {
+      console.error('Failed to load preferred server', e);
+    }
+  }, [servers]);
+
+  const handleServerChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
+    const s = servers.find((srv) => srv.name === e.target.value);
+    if (s) {
+      setActiveServer(s);
+      try {
+        localStorage.setItem(`${site_name}-preferred-server`, s.name);
+      } catch (e) {
+        console.error('Failed to save preferred server', e);
+      }
+    }
+  }, [servers]);
 
   // Filter seasons to only include valid ones (season_number > 0)
   const validSeasons = seasons.filter((s) => s.season_number > 0);
@@ -340,10 +367,7 @@ export function StreamingSection({
               <div className="relative">
                 <select
                   value={activeServer.name}
-                  onChange={(e) => {
-                    const s = servers.find((srv) => srv.name === e.target.value);
-                    if (s) setActiveServer(s);
-                  }}
+                  onChange={handleServerChange}
                   className="appearance-none bg-black/50 text-white px-4 py-2 pr-10 rounded-xl border border-white/10 focus:border-primary/50 focus:outline-none text-sm font-semibold cursor-pointer min-w-[170px]"
                 >
                   {servers.map((srv) => (
