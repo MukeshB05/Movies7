@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
 
-const TMDB_API_KEY = process.env.TMDB_API_KEY;
+const TMDB_API_KEY = '895a21bd83a561eaf341c4eb47d6c972';
 const BASE_URL = process.env.TMDB_BASE_URL || 'https://api.themoviedb.org/3';
 
 export async function GET(request: Request) {
