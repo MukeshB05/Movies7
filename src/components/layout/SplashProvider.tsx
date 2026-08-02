@@ -5,7 +5,6 @@ import { usePathname } from 'next/navigation';
 
 const SPLASH_DURATION = 6000;
 
-let splashShownThisSession = false;
 
 export function SplashProvider({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -17,10 +16,11 @@ export function SplashProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     setMounted(true);
 
-    if (pathname === '/' && !splashShownThisSession) {
-      splashShownThisSession = true;
-      setShowSplash(true);
-    }
+    try {
+      if (pathname === '/' && !localStorage.getItem('introPlayed')) {
+        setShowSplash(true);
+      }
+    } catch (e) {}
   }, []);
 
   // Handle splash timing
@@ -34,6 +34,9 @@ export function SplashProvider({ children }: { children: React.ReactNode }) {
     const hideTimer = setTimeout(() => {
       setShowSplash(false);
       setIsFading(false);
+      try {
+        localStorage.setItem('introPlayed', 'true');
+      } catch (e) {}
     }, SPLASH_DURATION);
 
     return () => {
@@ -66,7 +69,7 @@ export function SplashProvider({ children }: { children: React.ReactNode }) {
           <iframe
             src="/intro/index.html"
             className="w-full h-full border-0"
-            title="YorWatch Intro"
+            title="Dreamly7 Intro"
             allow="autoplay"
           />
         </div>
