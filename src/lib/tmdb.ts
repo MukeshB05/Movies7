@@ -8,7 +8,7 @@ import {
   Genre,
 } from '@/types/tmdb';
 
-const API_KEY = process.env.TMDB_API_KEY;
+const API_KEY = '895a21bd83a561eaf341c4eb47d6c972';
 const BASE_URL = process.env.TMDB_BASE_URL || 'https://api.themoviedb.org/3';
 
 async function fetchTMDB<T>(endpoint: string, params: Record<string, string> = {}): Promise<T> {
