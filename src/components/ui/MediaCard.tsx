@@ -82,15 +82,7 @@ export function MediaCard({ item, variant = 'poster', priority = false, showHove
     };
   }).filter(Boolean) as { id: number; name: string; href: string }[] || [];
 
-  // Build play URL with params
-  const playParams = new URLSearchParams({
-    id: item.id.toString(),
-    type: mediaType,
-    title: title,
-    poster: item.poster_path || '',
-    backdrop: item.backdrop_path || '',
-  });
-  const playUrl = `/play?${playParams.toString()}`;
+
 
   useEffect(() => {
     setIsMounted(true);
@@ -350,13 +342,13 @@ export function MediaCard({ item, variant = 'poster', priority = false, showHove
                 {/* Action Buttons */}
                 <div className="flex gap-2">
                   <Link
-                    href={playUrl}
+                    href={href}
                     className="flex items-center justify-center gap-2 flex-1 py-2.5 bg-primary hover:bg-primary-light rounded-xl text-white text-sm font-medium transition-colors"
                   >
                     <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                       <path d="M6.3 2.841A1.5 1.5 0 004 4.11v11.78a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
                     </svg>
-                    Trailer
+                    Play
                   </Link>
                   <Link
                     href={href}
